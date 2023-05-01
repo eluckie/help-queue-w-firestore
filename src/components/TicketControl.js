@@ -3,6 +3,8 @@ import NewTicketForm from './NewTicketForm';
 import TicketList from './TicketList';
 import EditTicketForm from './EditTicketForm';
 import TicketDetail from './TicketDetail';
+import db from "./../firebase.js";
+import { collection, addDoc } from 'firebase/firestore';
 
 function TicketControl() {
   const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
@@ -39,9 +41,8 @@ function TicketControl() {
     setSelectedTicket(null);
   }
 
-  const handleAddingNewTicketToList = (newTicket) => {
-    const newMainTicketList = mainTicketList.concat(newTicket);
-    setMainTicketList(newMainTicketList);
+  const handleAddingNewTicketToList = async (newTicketData) => {
+    await addDoc(collection(db, "tickets"), newTicketData);
     setFormVisibleOnPage(false);
   }
 
@@ -84,3 +85,20 @@ function TicketControl() {
 
 export default TicketControl;
 
+
+// to not use firebase auto-generated ids
+// import { v4 } from 'uuid';
+// import { setDoc, doc } from 'firebase/firestore;
+
+// function TicketControl() {
+//   ...
+// The doc() function takes 3 arguments: the database instance, the collection name, and the unique document identifier. In the above example, we've used the uuid library's v4() function to generate a unique ID.
+//   const handleAddingNewTicketToList = async (newTicketData) => {
+//     await setDoc(doc(db, "tickets", v4()), newTicketData);
+//     setFormVisibleOnPage(false);
+//   }
+
+//   ...
+// }
+
+// export default TicketControl;
