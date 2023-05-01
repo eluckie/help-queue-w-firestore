@@ -1,5 +1,5 @@
 {
-  "name": "fundamentals",
+  "name": "help-queue-w-firestore",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
